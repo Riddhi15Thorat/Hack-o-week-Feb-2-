@@ -1,0 +1,452 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CodeLab Bootcamp - Become a Web Developer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+:root{
+--sunrise1:#ff8787;
+--sunrise2:#ffd55e;
+--sunrise3:#7be7ff;
+--darkbg:#1e293b;
+--glassbg:rgba(255,255,255,.15);
+--glassborder:rgba(255,255,255,.25);
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Poppins,sans-serif;
+background:linear-gradient(135deg,#1e293b,#334155,#475569);
+color:white;
+line-height:1.7;
+overflow-x:hidden;
+}
+
+/* NAVBAR */
+
+.navbar{
+position:fixed;
+top:0;
+width:100%;
+background:rgba(30,41,59,.95);
+backdrop-filter:blur(20px);
+padding:1rem 0;
+z-index:1000;
+}
+
+nav{
+max-width:1300px;
+margin:auto;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 3rem;
+}
+
+.logo{
+font-size:2rem;
+font-weight:800;
+background:linear-gradient(135deg,var(--sunrise1),var(--sunrise2));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+cursor:pointer;
+}
+
+.nav-links{
+display:flex;
+list-style:none;
+gap:2.5rem;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+}
+
+.cta-nav{
+background:linear-gradient(135deg,var(--sunrise1),var(--sunrise2));
+padding:10px 20px;
+border-radius:50px;
+text-decoration:none;
+color:white;
+font-weight:600;
+}
+
+/* HERO */
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:120px 20px 40px;
+}
+
+.hero h1{
+font-size:clamp(3rem,8vw,6rem);
+font-weight:800;
+margin-bottom:20px;
+background:linear-gradient(135deg,#fff,var(--sunrise1),var(--sunrise2));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+max-width:650px;
+font-size:1.2rem;
+margin-bottom:40px;
+}
+
+.cta-hero{
+display:inline-flex;
+gap:10px;
+align-items:center;
+background:linear-gradient(135deg,var(--sunrise1),var(--sunrise2));
+padding:18px 32px;
+border-radius:60px;
+color:white;
+text-decoration:none;
+font-weight:700;
+}
+
+/* SECTIONS */
+
+.section{
+max-width:1300px;
+margin:auto;
+padding:100px 20px;
+}
+
+.section-title{
+text-align:center;
+font-size:3rem;
+margin-bottom:60px;
+background:linear-gradient(135deg,var(--sunrise1),var(--sunrise2));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* FEATURES */
+
+.features-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:30px;
+}
+
+.feature-card{
+background:var(--glassbg);
+border:1px solid var(--glassborder);
+backdrop-filter:blur(20px);
+border-radius:20px;
+padding:40px;
+text-align:center;
+transition:.4s;
+}
+
+.feature-card:hover{
+transform:translateY(-10px);
+}
+
+.feature-icon{
+font-size:3rem;
+margin-bottom:20px;
+}
+
+/* STATS */
+
+.stats-section{
+background:rgba(255,255,255,.08);
+border-radius:20px;
+padding:60px 20px;
+margin:40px auto;
+max-width:1200px;
+}
+
+.stats-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:30px;
+text-align:center;
+}
+
+.stat-number{
+font-size:3rem;
+font-weight:800;
+background:linear-gradient(135deg,var(--sunrise1),var(--sunrise2));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* CTA */
+
+.cta-section{
+background:linear-gradient(135deg,var(--sunrise1),var(--sunrise2));
+text-align:center;
+padding:80px 20px;
+border-radius:30px;
+margin:60px auto;
+max-width:1100px;
+}
+
+footer{
+background:rgba(30,41,59,.9);
+padding:40px 20px;
+text-align:center;
+margin-top:60px;
+}
+
+/* MOBILE */
+
+.mobile-menu{
+display:none;
+flex-direction:column;
+gap:5px;
+cursor:pointer;
+}
+
+.mobile-menu span{
+width:28px;
+height:3px;
+background:white;
+}
+
+.mobile-nav{
+display:none;
+flex-direction:column;
+gap:20px;
+padding:30px;
+background:rgba(30,41,59,.95);
+}
+
+.mobile-nav.active{
+display:flex;
+}
+
+@media(max-width:768px){
+
+.nav-links,
+.cta-nav{
+display:none;
+}
+
+.mobile-menu{
+display:flex;
+}
+
+}
+
+.fade-in{
+opacity:0;
+transform:translateY(40px);
+transition:.7s;
+}
+
+.fade-in.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+</style>
+</head>
+
+<body>
+
+<nav class="navbar" id="navbar">
+
+<div class="logo" onclick="scrollToTop()">CodeLab</div>
+
+<ul class="nav-links">
+<li><a href="#home">Home</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#stats">Stats</a></li>
+<li><a href="#apply">Apply</a></li>
+</ul>
+
+<a href="#apply" class="cta-nav">Get Started</a>
+
+<div class="mobile-menu" onclick="toggleMobileMenu()">
+<span></span>
+<span></span>
+<span></span>
+</div>
+
+<div class="mobile-nav" id="mobileNav">
+<a href="#home" onclick="closeMobileMenu()">Home</a>
+<a href="#features" onclick="closeMobileMenu()">Features</a>
+<a href="#stats" onclick="closeMobileMenu()">Stats</a>
+<a href="#apply" onclick="closeMobileMenu()">Apply</a>
+</div>
+
+</nav>
+
+<section id="home" class="hero">
+
+<h1>Launch Your<br>Developer Career</h1>
+
+<p>Master web development in 12 weeks with real projects, mentorship and career support.</p>
+
+<a href="#apply" class="cta-hero">
+<i class="fas fa-rocket"></i>
+Start Coding Today
+</a>
+
+</section>
+
+<section id="features" class="section">
+
+<h2 class="section-title fade-in">Why CodeLab?</h2>
+
+<div class="features-grid">
+
+<div class="feature-card fade-in">
+<div class="feature-icon">🚀</div>
+<h3>12 Weeks Bootcamp</h3>
+<p>Learn web development fast with real world projects.</p>
+</div>
+
+<div class="feature-card fade-in">
+<div class="feature-icon">💻</div>
+<h3>Full Stack Skills</h3>
+<p>HTML, CSS, JavaScript, React, Node and more.</p>
+</div>
+
+<div class="feature-card fade-in">
+<div class="feature-icon">⭐</div>
+<h3>Job Support</h3>
+<p>Portfolio building, interview prep and hiring network.</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="stats" class="stats-section fade-in">
+
+<div class="stats-grid">
+
+<div>
+<div class="stat-number">500+</div>
+<p>Students</p>
+</div>
+
+<div>
+<div class="stat-number">95%</div>
+<p>Placement</p>
+</div>
+
+<div>
+<div class="stat-number">4.9⭐</div>
+<p>Rating</p>
+</div>
+
+<div>
+<div class="stat-number">₹25L</div>
+<p>Avg Salary</p>
+</div>
+
+</div>
+
+</section>
+
+<section id="apply" class="cta-section fade-in">
+
+<h2>Ready to Start Coding?</h2>
+
+<p>Next batch starting soon.</p>
+
+<a href="#" class="cta-hero" onclick="handleApply()">
+Apply Now
+<i class="fas fa-arrow-right"></i>
+</a>
+
+</section>
+
+<footer>
+
+<p><strong>CodeLab Bootcamp</strong> | Nagpur, Maharashtra</p>
+
+<p style="margin-top:10px;opacity:.8;">
+© 2026 CodeLab. Built for future developers.
+</p>
+
+</footer>
+
+<script>
+
+/* smooth scroll */
+
+document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+anchor.addEventListener('click',function(e){
+
+e.preventDefault()
+
+const id=this.getAttribute('href').substring(1)
+const target=document.getElementById(id)
+
+if(target){
+target.scrollIntoView({behavior:'smooth'})
+}
+
+})
+})
+
+/* mobile menu */
+
+const mobileMenu=document.querySelector('.mobile-menu')
+const mobileNav=document.getElementById('mobileNav')
+
+function toggleMobileMenu(){
+mobileNav.classList.toggle("active")
+}
+
+function closeMobileMenu(){
+mobileNav.classList.remove("active")
+}
+
+/* scroll animation */
+
+const observer=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add("visible")
+}
+})
+})
+
+document.querySelectorAll('.fade-in').forEach(el=>{
+observer.observe(el)
+})
+
+/* apply button */
+
+function handleApply(){
+alert("Application submitted! We will contact you soon.")
+}
+
+/* scroll top */
+
+function scrollToTop(){
+window.scrollTo({top:0,behavior:'smooth'})
+}
+
+</script>
+
+</body>
+</html>
+```

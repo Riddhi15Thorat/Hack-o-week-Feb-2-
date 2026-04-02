@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shivaji Maharaj History Quiz</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Trebuchet MS', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: linear-gradient(-45deg, #ff7b00, #ff3c38, #800000, #6a040f, #ffbe0b);
+      background-size: 400% 400%;
+      animation: gradientBG 12s ease infinite;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      z-index: 0;
+      opacity: 0.45;
+    }
+
+    body::before {
+      width: 220px;
+      height: 220px;
+      background: #ffd60a;
+      top: 8%;
+      left: 8%;
+      animation: float1 6s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      width: 280px;
+      height: 280px;
+      background: #ff5400;
+      bottom: 10%;
+      right: 8%;
+      animation: float2 7s ease-in-out infinite alternate;
+    }
+
+    @keyframes float1 {
+      from { transform: translateY(0px) translateX(0px); }
+      to { transform: translateY(25px) translateX(20px); }
+    }
+
+    @keyframes float2 {
+      from { transform: translateY(0px) translateX(0px); }
+      to { transform: translateY(-25px) translateX(-20px); }
+    }
+
+    .quiz-container {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-radius: 28px;
+      padding: 35px;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.35);
+      border: 2px solid rgba(255, 255, 255, 0.22);
+      color: white;
+      animation: popIn 0.8s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes popIn {
+      from {
+        transform: scale(0.88);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    .title {
+      text-align: center;
+      font-size: 2.3rem;
+      font-weight: bold;
+      color: #fff700;
+      text-shadow: 0 0 10px rgba(255, 247, 0, 0.7), 2px 2px 8px rgba(0,0,0,0.5);
+      margin-bottom: 10px;
+      letter-spacing: 1px;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1rem;
+      color: #fff;
+      opacity: 0.95;
+    }
+
+    .question-count {
+      font-size: 1rem;
+      margin-bottom: 15px;
+      color: #fff3a3;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.12);
+      padding: 8px 14px;
+      border-radius: 12px;
+      display: inline-block;
+      box-shadow: 0 0 12px rgba(255,255,255,0.08);
+    }
+
+    .question {
+      font-size: 1.45rem;
+      margin: 20px 0;
+      font-weight: bold;
+      line-height: 1.6;
+      color: #ffffff;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.35);
+    }
+
+    .options {
+      display: grid;
+      gap: 16px;
+    }
+
+    .option {
+      background: rgba(255, 255, 255, 0.14);
+      border: 2px solid rgba(255,255,255,0.18);
+      padding: 15px 18px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    .option:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: translateX(6px) scale(1.02);
+      border-color: #fff700;
+      box-shadow: 0 0 15px rgba(255, 247, 0, 0.25);
+    }
+
+    .option.selected {
+      background: linear-gradient(135deg, #fff700, #ffb703);
+      color: #6a040f;
+      border-color: white;
+      box-shadow: 0 0 18px rgba(255, 247, 0, 0.45);
+      transform: scale(1.02);
+    }
+
+    .btn-area {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 28px;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      padding: 13px 24px;
+      border: none;
+      border-radius: 14px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.3px;
+    }
+
+    #nextBtn {
+      background: linear-gradient(135deg, #fff700, #ffb703);
+      color: #6a040f;
+      box-shadow: 0 8px 18px rgba(255, 183, 3, 0.35);
+    }
+
+    #nextBtn:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 20px rgba(255, 247, 0, 0.45);
+    }
+
+    #restartBtn {
+      background: linear-gradient(135deg, #ffffff, #ffe8cc);
+      color: #7f1d1d;
+      display: none;
+    }
+
+    #restartBtn:hover {
+      transform: scale(1.05);
+    }
+
+    .result-box {
+      text-align: center;
+      display: none;
+      animation: popIn 0.7s ease;
+    }
+
+    .result-box h2 {
+      font-size: 2.2rem;
+      color: #fff700;
+      margin-bottom: 15px;
+      text-shadow: 0 0 12px rgba(255,247,0,0.45), 2px 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .result-box p {
+      font-size: 1.2rem;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    .message {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      color: #fff;
+    }
+
+    #restartBtn2 {
+      background: linear-gradient(135deg, #ffcc00, #ff7b00);
+      color: #6a040f;
+      box-shadow: 0 8px 18px rgba(255, 123, 0, 0.35);
+    }
+
+    #restartBtn2:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 20px rgba(255, 204, 0, 0.45);
+    }
+
+    .footer-note {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 1rem;
+      color: #fff8c4;
+      font-style: italic;
+      font-weight: bold;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
+    }
+
+    @media (max-width: 600px) {
+      .quiz-container {
+        padding: 22px;
+      }
+
+      .title {
+        font-size: 1.7rem;
+      }
+
+      .question {
+        font-size: 1.15rem;
+      }
+
+      .option {
+        font-size: 0.95rem;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .btn-area {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <div id="quizBox">
+      <div class="title">⚔️ Chhatrapati Shivaji Maharaj History Quiz 👑</div>
+      <div class="subtitle">Test your knowledge of the great Maratha warrior!</div>
+      <div class="question-count" id="questionCount">Question 1 of 12</div>
+      <div class="question" id="question">Question text</div>
+      <div class="options" id="options"></div>
+
+      <div class="btn-area">
+        <button id="nextBtn">Next Question ➡️</button>
+        <button id="restartBtn">🔁 Restart Quiz</button>
+      </div>
+
+      <div class="footer-note">जय भवानी ⚔️ जय शिवाजी</div>
+    </div>
+
+    <div class="result-box" id="resultBox">
+      <h2>🏆 Quiz Completed!</h2>
+      <p id="scoreText"></p>
+      <p id="percentageText"></p>
+      <p class="message" id="messageText"></p>
+      <div class="btn-area" style="justify-content: center; margin-top: 20px;">
+        <button id="restartBtn2">🔁 Play Again</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "1. In which year was Chhatrapati Shivaji Maharaj born?",
+        options: ["1627", "1630", "1635", "1640"],
+        answer: "1630"
+      },
+      {
+        question: "2. At which fort was Shivaji Maharaj born?",
+        options: ["Raigad Fort", "Sinhagad Fort", "Shivneri Fort", "Pratapgad Fort"],
+        answer: "Shivneri Fort"
+      },
+      {
+        question: "3. Who was the mother of Shivaji Maharaj, who deeply influenced his character and values?",
+        options: ["Tarabai", "Soyarabai", "Jijabai", "Saibai"],
+        answer: "Jijabai"
+      },
+      {
+        question: "4. Who was the father of Shivaji Maharaj?",
+        options: ["Baji Prabhu Deshpande", "Shahaji Bhosale", "Tanaji Malusare", "Sambhaji Maharaj"],
+        answer: "Shahaji Bhosale"
+      },
+      {
+        question: "5. Which fort was the first major fort captured by Shivaji Maharaj?",
+        options: ["Torna Fort", "Raigad Fort", "Panhala Fort", "Sindhudurg Fort"],
+        answer: "Torna Fort"
+      },
+      {
+        question: "6. In which year did Shivaji Maharaj kill Afzal Khan at Pratapgad?",
+        options: ["1659", "1663", "1670", "1674"],
+        answer: "1659"
+      },
+      {
+        question: "7. Which Mughal general was famously attacked by Shivaji Maharaj in Pune?",
+        options: ["Aurangzeb", "Shaista Khan", "Jai Singh I", "Diler Khan"],
+        answer: "Shaista Khan"
+      },
+      {
+        question: "8. In which year was Shivaji Maharaj crowned as Chhatrapati at Raigad?",
+        options: ["1666", "1670", "1674", "1680"],
+        answer: "1674"
+      },
+      {
+        question: "9. What was the name of Shivaji Maharaj's administrative council of eight ministers?",
+        options: ["Ashtapradhan", "Navratna", "Sabha Mandal", "Rajya Parishad"],
+        answer: "Ashtapradhan"
+      },
+      {
+        question: "10. Which treaty was signed between Shivaji Maharaj and the Mughals in 1665?",
+        options: ["Treaty of Surat", "Treaty of Agra", "Treaty of Purandar", "Treaty of Delhi"],
+        answer: "Treaty of Purandar"
+      },
+      {
+        question: "11. From where did Shivaji Maharaj famously escape from Mughal custody in 1666?",
+        options: ["Delhi", "Agra", "Lahore", "Jaipur"],
+        answer: "Agra"
+      },
+      {
+        question: "12. Which trusted commander sacrificed his life in the Battle of Pavan Khind?",
+        options: ["Tanaji Malusare", "Netaji Palkar", "Baji Prabhu Deshpande", "Murarbaji Deshpande"],
+        answer: "Baji Prabhu Deshpande"
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let selectedOption = null;
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const nextBtn = document.getElementById("nextBtn");
+    const restartBtn = document.getElementById("restartBtn");
+    const restartBtn2 = document.getElementById("restartBtn2");
+    const resultBox = document.getElementById("resultBox");
+    const quizBox = document.getElementById("quizBox");
+    const scoreText = document.getElementById("scoreText");
+    const percentageText = document.getElementById("percentageText");
+    const messageText = document.getElementById("messageText");
+    const questionCount = document.getElementById("questionCount");
+
+    function loadQuestion() {
+      selectedOption = null;
+      const currentQuiz = quizData[currentQuestion];
+      questionCount.textContent = `Question ${currentQuestion + 1} of ${quizData.length}`;
+      questionEl.textContent = currentQuiz.question;
+      optionsEl.innerHTML = "";
+
+      currentQuiz.options.forEach(option => {
+        const btn = document.createElement("div");
+        btn.classList.add("option");
+        btn.textContent = option;
+
+        btn.addEventListener("click", () => {
+          document.querySelectorAll(".option").forEach(opt => opt.classList.remove("selected"));
+          btn.classList.add("selected");
+          selectedOption = option;
+        });
+
+        optionsEl.appendChild(btn);
+      });
+
+      if (currentQuestion === quizData.length - 1) {
+        nextBtn.textContent = "Show Result 🏆";
+      } else {
+        nextBtn.textContent = "Next Question ➡️";
+      }
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (!selectedOption) {
+        alert("⚠️ Please select an answer before moving to the next question!");
+        return;
+      }
+
+      if (selectedOption === quizData[currentQuestion].answer) {
+        score++;
+      }
+
+      currentQuestion++;
+
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        showResult();
+      }
+    });
+
+    function showResult() {
+      quizBox.style.display = "none";
+      resultBox.style.display = "block";
+
+      const percentage = ((score / quizData.length) * 100).toFixed(2);
+
+      scoreText.textContent = `✅ Your Score: ${score} / ${quizData.length}`;
+      percentageText.textContent = `📊 Percentage: ${percentage}%`;
+
+      let message = "";
+
+      if (percentage >= 90) {
+        message = "🔥 Outstanding! You are a true Shivaji Maharaj History Master!";
+      } else if (percentage >= 70) {
+        message = "👏 Very Good! You have strong knowledge of Maratha history!";
+      } else if (percentage >= 50) {
+        message = "👍 Good try! Keep learning more about Shivaji Maharaj!";
+      } else {
+        message = "📚 Keep practicing! History of Shivaji Maharaj is full of inspiration!";
+      }
+
+      messageText.textContent = message;
+    }
+
+    function restartQuiz() {
+      currentQuestion = 0;
+      score = 0;
+      selectedOption = null;
+      quizBox.style.display = "block";
+      resultBox.style.display = "none";
+      loadQuestion();
+    }
+
+    restartBtn.addEventListener("click", restartQuiz);
+    restartBtn2.addEventListener("click", restartQuiz);
+
+    loadQuestion();
+  </script>
+
+</body>
+</html>
